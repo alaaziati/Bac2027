@@ -1,17 +1,24 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة التميز للبكالوريا</title>
+    
+    <!-- استدعاء خط Cairo الاحترافي -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- استدعاء مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* تصميم فخم وعصري (لوحة ألوان داكنة وذهبية) */
+        /* لوحة الألوان والتصميم العصري */
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-overlay: rgba(15, 23, 42, 0.88);
+            --card-bg: rgba(30, 41, 59, 0.75); /* تأثير زجاجي */
             --accent-gold: #fbbf24;
+            --accent-gold-hover: #f59e0b;
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #cbd5e1;
             --success: #10b981;
         }
 
@@ -19,127 +26,231 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
+            /* إضافة صورة خلفية دراسية مع طبقة تعتيم */
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('https://images.unsplash.com/photo-1513258496099-481620d4ce8d?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
             color: var(--text-main);
             padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* حاوية لتحديد العرض على شاشات الكمبيوتر */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         header {
             text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #1e293b 0%, #111827 100%);
-            border-radius: 15px;
-            border: 1px solid rgba(251, 191, 36, 0.2);
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(17, 24, 39, 0.9) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        header h1, header p {
+            position: relative;
+            z-index: 1;
         }
 
         header h1 {
             color: var(--accent-gold);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.3rem;
         }
 
-        /* تقسيم الخانات */
+        /* تخطيط الشبكة المتجاوب (Grid) */
         .grid-container {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
         }
 
-        @media (min-width: 992px) {
+        /* تخصيص للكمبيوتر (PC) والشاشات الكبيرة */
+        @media (min-width: 1024px) {
             .grid-container {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1.2fr 2fr; /* عمود للعداد والتحفيز وعمود للجدول */
             }
             .full-width {
                 grid-column: span 2;
             }
+            .header-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
         }
 
+        /* تصميم البطاقات بتأثير Glassmorphism */
         .card {
             background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            backdrop-filter: blur(12px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(251, 191, 36, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border-color: rgba(251, 191, 36, 0.4);
         }
 
         .card-title {
             color: var(--accent-gold);
-            font-size: 1.4rem;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
             border-bottom: 2px solid rgba(251, 191, 36, 0.2);
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        /* الخانة 1: لوحة التحكم والتقدم */
+        .card-title i {
+            font-size: 1.8rem;
+        }
+
+        /* لوحة الإنجاز */
         .progress-box {
             text-align: center;
-            padding: 20px;
+            padding: 20px 0;
         }
         
         .counter-text {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        #solved-count {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--success);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            display: inline-block;
+        }
+
+        /* كبسولة النجاح */
+        .quote-box {
+            font-style: italic;
+            background: rgba(255,255,255,0.03);
+            border-right: 4px solid var(--accent-gold);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
             font-size: 1.2rem;
-            margin-bottom: 10px;
+            line-height: 1.6;
         }
 
-        /* الخانة 2: جدول تنظيم الوقت */
-        .timetable {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+        .tips-list {
+            list-style-type: none;
+            padding: 0;
         }
 
-        .timetable th, .timetable td {
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 12px;
-            text-align: right;
+        .tips-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-right: 25px;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
-        .timetable th {
-            background-color: rgba(251, 191, 36, 0.1);
+        .tips-list li::before {
+            content: "\f058"; /* FontAwesome Check Circle */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 0;
             color: var(--accent-gold);
         }
 
-        .timetable tr:nth-child(even) {
-            background-color: rgba(255,255,255,0.02);
+        /* جدول تنظيم الوقت */
+        .timetable {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .timetable th, .timetable td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .timetable th {
+            background-color: rgba(251, 191, 36, 0.15);
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .timetable tr:hover td {
+            background-color: rgba(255,255,255,0.05);
         }
 
         .subject-tag {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
-        .tag-main { background-color: #b91c1c; color: white; } /* أساسية */
-        .tag-second { background-color: #0369a1; color: white; } /* ثانوية */
-        .tag-rest { background-color: #047857; color: white; } /* مراجعة/راحة */
+        .tag-main { background: linear-gradient(45deg, #b91c1c, #ef4444); color: white; box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3); }
+        .tag-second { background: linear-gradient(45deg, #0369a1, #0ea5e9); color: white; box-shadow: 0 2px 10px rgba(14, 165, 233, 0.3); }
+        .tag-rest { background: linear-gradient(45deg, #047857, #10b981); color: white; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3); }
 
-        /* الخانة 3: تتبع البكالوريات */
+        /* تتبع البكالوريات */
         .scroll-table {
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
-            padding-left: 5px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* تخصيص شريط التمرير (Scrollbar) ليناسب الكمبيوتر */
+        .scroll-table::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scroll-table::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        .scroll-table::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 10px;
         }
 
         .bac-table {
@@ -148,7 +259,7 @@
         }
 
         .bac-table th, .bac-table td {
-            padding: 12px;
+            padding: 15px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             text-align: center;
         }
@@ -156,174 +267,191 @@
         .bac-table th {
             position: sticky;
             top: 0;
-            background-color: var(--card-bg);
+            background-color: #1e293b;
             color: var(--accent-gold);
-            z-index: 1;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        .checkbox-container {
-            display: block;
-            position: relative;
-            cursor: pointer;
-            font-size: 22px;
-            user-select: none;
+        .bac-table tr:hover {
+            background-color: rgba(251, 191, 36, 0.05);
         }
 
-        /* تخصيص الـ Checkbox لتبدو فخمة */
+        /* Checkbox احترافي */
         .bac-table input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent-gold);
+            appearance: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.5em;
+            height: 1.5em;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.25em;
+            display: inline-grid;
+            place-content: center;
             cursor: pointer;
+            transition: all 0.2s ease-in-out;
         }
 
-        /* الخانة 4: نصائح وحكمة اليوم */
-        .quote-box {
-            font-style: italic;
-            color: var(--text-muted);
-            border-right: 4px solid var(--accent-gold);
-            padding-right: 15px;
-            margin-top: 15px;
-            font-size: 1.1rem;
+        .bac-table input[type="checkbox"]::before {
+            content: "";
+            width: 0.85em;
+            height: 0.85em;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            transform: scale(0);
+            transform-origin: bottom left;
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--text-main);
+            background-color: #0f172a;
         }
 
-        .tips-list {
-            margin-top: 15px;
-            list-style-type: square;
-            padding-right: 20px;
-            color: var(--text-muted);
+        .bac-table input[type="checkbox"]:checked {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
         }
 
-        .tips-list li {
-            margin-bottom: 10px;
+        .bac-table input[type="checkbox"]:checked::before {
+            transform: scale(1);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>مَنصَّةُ التَّمَيُّزِ وَالتَّفَوُّقِ</h1>
-        <p>بوابتك الذكية لتنظيم الوقت واجتياز شهادة البكالوريا بمعدل ممتاز إن شاء الله</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>مَنصَّةُ التَّمَيُّزِ وَالتَّفَوُّقِ</h1>
+            <p>بوابتك الذكية لتنظيم الوقت واجتياز شهادة البكالوريا بمعدل ممتاز إن شاء الله</p>
+        </header>
 
-    <div class="grid-container">
+        <div class="grid-container">
 
-        <div class="card">
-            <div class="card-title">📊 لوحة التحكم ومعدل الإنجاز</div>
-            <div class="progress-box">
-                <p class="counter-text">عدد مواضيع البكالوريا التي قمت بحلها حتى الآن:</p>
-                <h2 id="solved-count" style="font-size: 3rem; color: var(--success); margin: 10px 0;">0</h2>
-                <p style="color: var(--text-muted);">كل خطوة صغيرة تقربك من هدفك الشغل الشاغل. واصل العطاء!</p>
+            <!-- العمود الجانبي (لشاشات الكمبيوتر) -->
+            <div class="sidebar">
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-title"><i class="fa-solid fa-chart-pie"></i> لوحة الإنجاز</div>
+                    <div class="progress-box">
+                        <p class="counter-text">مواضيع البكالوريا المحلولة:</p>
+                        <div id="solved-count">0</div>
+                        <p style="color: var(--text-muted);">كل خطوة صغيرة تقربك من هدفك. واصل العطاء!</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><i class="fa-solid fa-lightbulb"></i> كبسولة التحفيز</div>
+                    <div class="quote-box">
+                        "النجاح ليس صدفة، بل هو نتاج تنظيم، عمل مستمر، وإيمان مطلق بالقدرات."
+                    </div>
+                    <ul class="tips-list">
+                        <li>ابدأ بالمواد الأساسية في الأوقات التي يكون فيها استيعابك عاليًا (كالصباح الباكر).</li>
+                        <li>حل البكالوريات السابقة هو المفتاح السري لفهم عقلية الأستاذ المصحح.</li>
+                        <li>حافظ على فترات راحة (تقنية البومودورو).</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-title">💡 كبسولة النجاح والتحفيز</div>
-            <div class="quote-box">
-                "النجاح ليس صدفة، بل هو نتاج تنظيم، عمل مستمر، وإيمان مطلق بالقدرات."
+            <!-- العمود الرئيسي -->
+            <div class="main-content">
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-title"><i class="fa-regular fa-calendar-check"></i> الخطة اليومية المقترحة</div>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">جدول مرن يعتمد على فترات ذروة التركيز:</p>
+                    <div style="overflow-x: auto;">
+                        <table class="timetable">
+                            <thead>
+                                <tr>
+                                    <th>الفترة الزمنية</th>
+                                    <th>النشاط والدراسة</th>
+                                    <th>نوع المادة</th>
+                                    <th>الهدف</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>05:00 - 06:30 (الفجر)</td>
+                                    <td>حفظ وتثقيف (شريعة، تاريخ وجغرافيا، فلسفة)</td>
+                                    <td><span class="subject-tag tag-second">مواد الحفظ</span></td>
+                                    <td>استغلال الذاكرة قصيرة المدى.</td>
+                                </tr>
+                                <tr>
+                                    <td>08:00 - 11:00 (الصباح)</td>
+                                    <td>مادة أساسية 1 (رياضيات / فيزياء / علوم / أدب)</td>
+                                    <td><span class="subject-tag tag-main">مادة أساسية</span></td>
+                                    <td>استيعاب المفاهيم المعقدة.</td>
+                                </tr>
+                                <tr>
+                                    <td>14:00 - 16:30 (المساء)</td>
+                                    <td>لغات (فرنسية، إنجليزية، عربية) أو مراجعة</td>
+                                    <td><span class="subject-tag tag-second">مواد لغات</span></td>
+                                    <td>تطوير مهارات التعبير.</td>
+                                </tr>
+                                <tr>
+                                    <td>17:30 - 19:30 (قبل العشاء)</td>
+                                    <td>مادة أساسية 2 أو تكملة لتمارين مستعصية</td>
+                                    <td><span class="subject-tag tag-main">مادة أساسية</span></td>
+                                    <td>سد الثغرات ونقاط الضعف.</td>
+                                </tr>
+                                <tr>
+                                    <td>21:00 - 22:00 (الليل)</td>
+                                    <td>تقييم اليوم + حل موضوع جزئي + تنظيم الغد</td>
+                                    <td><span class="subject-tag tag-rest">تخطيط واسترخاء</span></td>
+                                    <td>نوم مبكر ومريح.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <ul class="tips-list">
-                <li>ابدأ بالمواد الأساسية في الأوقات التي يكون فيها استيعابك عاليًا (كالصباح الباكر).</li>
-                <li>حل البكالوريات السابقة هو المفتاح السري لفهم عقلية الأستاذ المصحح.</li>
-                <li>حافظ على فترات راحة قصيرة (5 دقائق) كل 25 دقيقة دراسة (تقنية البومودورو).</li>
-            </ul>
-        </div>
 
-        <div class="card full-width">
-            <div class="card-title">📅 خطة تنظيم الوقت المقترحة (النموذج اليومي المتوازن)</div>
-            <p style="color: var(--text-muted); margin-bottom: 15px;">جدول مرن يعتمد على فترات ذروة التركيز، مصمم خصيصاً لطلبة البكالوريا:</p>
-            <table class="timetable">
-                <thead>
-                    <tr>
-                        <th>الفترة الزمنية</th>
-                        <th>النشاط والدراسة</th>
-                        <th>نوع المادة</th>
-                        <th>الهدف</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>05:00 - 06:30 (بعد الفجر)</td>
-                        <td>حفظ وتثقيف (شريعة، تاريخ وجغرافيا، فلسفة)</td>
-                        <td><span class="subject-tag tag-second">مواد الحفظ</span></td>
-                        <td>استغلال أعلى مستويات الذاكرة قصيرة المدى.</td>
-                    </tr>
-                    <tr>
-                        <td>08:00 - 11:00 (الصباح)</td>
-                        <td>مادة أساسية 1 (رياضيات / فيزياء / علوم / أدب حسب شعبتك)</td>
-                        <td><span class="subject-tag tag-main">مادة أساسية</span></td>
-                        <td>حل تمارين معمقة واستيعاب المفاهيم المعقدة.</td>
-                    </tr>
-                    <tr>
-                        <td>14:00 - 16:30 (المساء)</td>
-                        <td>لغات (فرنسية، إنجليزية، عربية) أو مراجعة خفيفة</td>
-                        <td><span class="subject-tag tag-second">مواد لغات</span></td>
-                        <td>تطوير مهارات التعبير وحل النصوص والتمارين السريعة.</td>
-                    </tr>
-                    <tr>
-                        <td>17:30 - 19:30 (قبل العشاء)</td>
-                        <td>مادة أساسية 2 أو تكملة لتمارين مستعصية</td>
-                        <td><span class="subject-tag tag-main">مادة أساسية</span></td>
-                        <td>التركيز على نقاط الضعف وسد الثغرات.</td>
-                    </tr>
-                    <tr>
-                        <td>21:00 - 22:00 (الليل)</td>
-                        <td>تقييم اليوم + حل موضوع بكالوريا جزئي + تنظيم حقيبة الغد</td>
-                        <td><span class="subject-tag tag-rest">تخطيط واسترخاء</span></td>
-                        <td>نوم مبكر ومريح لإعادة شحن الدماغ.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="card full-width">
-            <div class="card-title">✅ سجل إنجاز البكالوريات السابقة (2012 - 2025)</div>
-            <p style="color: var(--text-muted); margin-bottom: 15px;">ضع علامة صح بجانب كل حولية تقوم بحلها كاملاً. سيتم حفظ تقدمك تلقائياً في المتصفح!</p>
-            
-            <div class="scroll-table">
-                <table class="bac-table">
-                    <thead>
-                        <tr>
-                            <th>السنة</th>
-                            <th>الرياضيات</th>
-                            <th>العلوم الفيزيائية</th>
-                            <th>العلوم الطبيعية / الفلسفة</th>
-                            <th>اللغة العربية</th>
-                            <th>التاريخ والجغرافيا</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bac-tbody">
+            <!-- سجل الإنجاز (يأخذ عرض الشاشة كاملاً في الأسفل) -->
+            <div class="card full-width">
+                <div class="card-title"><i class="fa-solid fa-list-check"></i> سجل إنجاز البكالوريات السابقة (2012 - 2025)</div>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">قم بتحديد المواضيع التي أتممتها. سيتم حفظ تقدمك تلقائياً في جهازك لتتمكن من المتابعة لاحقاً[cite: 1].</p>
+                
+                <div class="scroll-table">
+                    <table class="bac-table">
+                        <thead>
+                            <tr>
+                                <th>السنة</th>
+                                <th>الرياضيات</th>
+                                <th>الفيزياء</th>
+                                <th>العلوم / الفلسفة</th>
+                                <th>اللغة العربية</th>
+                                <th>التاريخ والجغرافيا</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bac-tbody">
+                            <!-- يتم التوليد برمجيا -->
                         </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <script>
-        // توليد جدول البكالوريات برمجياً لتوفير مساحة الكود
+        // توليد جدول البكالوريات برمجياً[cite: 1]
         const tbody = document.getElementById('bac-tbody');
         const subjects = ['math', 'physics', 'science', 'arabic', 'history'];
         
-        // توليد السنوات من 2025 نزولاً إلى 2012
+        // توليد السنوات من 2025 نزولاً إلى 2012[cite: 1]
         for (let year = 2025; year >= 2012; year--) {
             const tr = document.createElement('tr');
             
-            // عمود السنة
             const tdYear = document.createElement('td');
             tdYear.textContent = year;
-            tdYear.style.fontWeight = 'bold';
+            tdYear.style.fontWeight = '800';
             tdYear.style.color = 'var(--accent-gold)';
+            tdYear.style.fontSize = '1.2rem';
             tr.appendChild(tdYear);
             
-            // أعمدة المواد
             subjects.forEach(sub => {
                 const td = document.createElement('td');
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.id = `bac-${year}-${sub}`;
                 
-                // إضافة حدث عند الضغط لحفظ الحالة وتحديث العداد
                 checkbox.addEventListener('change', updateProgress);
                 
                 td.appendChild(checkbox);
@@ -333,7 +461,7 @@
             tbody.appendChild(tr);
         }
 
-        // دالة لتحديث العداد وحفظ البيانات في متصفح المستخدم (LocalStorage)
+        // تحديث العداد وحفظ البيانات (LocalStorage)[cite: 1]
         function updateProgress() {
             let solvedCount = 0;
             const checkboxes = document.querySelectorAll('.bac-table input[type="checkbox"]');
@@ -347,10 +475,16 @@
                 }
             });
             
-            document.getElementById('solved-count').textContent = solvedCount;
+            // إضافة تأثير حركي بسيط عند تغير الرقم
+            const counterElement = document.getElementById('solved-count');
+            counterElement.textContent = solvedCount;
+            counterElement.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                counterElement.style.transform = 'scale(1)';
+            }, 200);
         }
 
-        // دالة لتحميل البيانات المحفوظة سابقاً عند فتح الموقع
+        // تحميل البيانات المحفوظة[cite: 1]
         function loadProgress() {
             const checkboxes = document.querySelectorAll('.bac-table input[type="checkbox"]');
             let solvedCount = 0;
@@ -365,7 +499,6 @@
             document.getElementById('solved-count').textContent = solvedCount;
         }
 
-        // تشغيل دالة التحميل عند بدء تشغيل الصفحة
         window.onload = loadProgress;
     </script>
 </body>
